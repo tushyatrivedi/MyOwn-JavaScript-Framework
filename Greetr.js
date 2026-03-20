@@ -79,8 +79,11 @@
     },
     //function to use jQuery to dynamically change html on the webpage
     HTMLGreeting: function (selector, formal) {
+<<<<<<< HEAD
       console.log("Html Greeting function called!!");
 
+=======
+>>>>>>> 1604f7e550b225e667dd716ba32dc625aeb17c54
       if (!$) {
         throw "jQuery not loaded";
       }
@@ -89,7 +92,11 @@
         throw "selector not given";
       }
 
+<<<<<<< HEAD
       var msg = formal ? this.formalGreeting() : this.greeting();
+=======
+      var msg = this.greet(formal);
+>>>>>>> 1604f7e550b225e667dd716ba32dc625aeb17c54
 
       $(selector).html(msg);
 
