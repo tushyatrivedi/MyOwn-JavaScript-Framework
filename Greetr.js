@@ -19,13 +19,13 @@
   };
 
   var formalGreetings = {
-    en: "greetings",
-    es: "saludos",
+    en: "Greetings",
+    es: "Saludos",
   };
 
   var logMessages = {
-    en: "logged in",
-    es: "inicio sesion",
+    en: "Logged In",
+    es: "Inicio Sesion",
   };
 
   //contains methods that can be used on the object Greetr
@@ -77,6 +77,24 @@
       this.language = lang;
       return this;
     },
+    //function to use jQuery to dynamically change html on the webpage
+    HTMLGreeting: function (selector, formal) {
+      console.log("Html Greeting function called!!");
+
+      if (!$) {
+        throw "jQuery not loaded";
+      }
+
+      if (!selector) {
+        throw "selector not given";
+      }
+
+      var msg = formal ? this.formalGreeting() : this.greeting();
+
+      $(selector).html(msg);
+
+      return this;
+    },
   };
 
   //'this' points to new empty object created using function constructor
@@ -85,6 +103,8 @@
     self.firstname = firstname || "";
     self.lastname = lastname || "";
     self.language = language || "en";
+
+    self.validate();
   };
   //since function constructor return new Greetr.init() object, prototype needs to be setup
   Greetr.init.prototype = Greetr.prototype;
