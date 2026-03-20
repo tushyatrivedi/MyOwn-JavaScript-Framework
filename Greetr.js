@@ -77,6 +77,22 @@
       this.language = lang;
       return this;
     },
+    //function to use jQuery to dynamically change html on the webpage
+    HTMLGreeting: function (selector, formal) {
+      if (!$) {
+        throw "jQuery not loaded";
+      }
+
+      if (!selector) {
+        throw "selector not given";
+      }
+
+      var msg = this.greet(formal);
+
+      $(selector).html(msg);
+
+      return this;
+    },
   };
 
   //'this' points to new empty object created using function constructor
