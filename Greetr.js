@@ -5,9 +5,79 @@
     return new Greetr.init(firstname, lastname, language);
   };
 
+  //below variables and objects are part of the execution context created by IIFE
+  //so any functions inside it would still have
+  //access to them when required because they sit lexically inside this execution context
+  //in other words a closure will be created that will contain these variables
+
+  //also these are not accessible outside this file because of execution context here
+  var supportedLanguages = ["en", "es"];
+
+  var greetings = {
+    en: "Hello",
+    es: "Hola",
+  };
+
+  var formalGreetings = {
+    en: "greetings",
+    es: "saludos",
+  };
+
+  var logMessages = {
+    en: "logged in",
+    es: "inicio sesion",
+  };
+
   //contains methods that can be used on the object Greetr
   //automatically assigned to the object created using the function constructor
-  Greetr.prototype = {};
+  Greetr.prototype = {
+    fullName: function () {
+      return this.firstname + " " + this.lastname;
+    },
+    //the function will have aceess to supportedLanguages variable
+    //because of where it sits lexically, due to closures
+    validate: function () {
+      if (supportedLanguages.indexOf(this.language) === -1) {
+        throw "Language not supported";
+      }
+    },
+    greeting: function () {
+      return greetings[this.language] + " " + this.firstname;
+    },
+    formalGreeting: function () {
+      return formalGreetings[this.language] + " " + this.fullName();
+    },
+    //formal is a bollean variable denoting whether we want formal greeting
+    greet: function (formal) {
+      var msg;
+
+      if (formal) {
+        msg = this.formalGreeting();
+      }
+      //if null or undefined it will be coerced to false
+      else {
+        msg = this.greeting();
+      }
+
+      console.log(msg);
+
+      //this points to the calling object and returning it makes the method chainable
+      return this;
+    },
+    //used for auditing purposes, just an example method
+    log: function () {
+      if (console) {
+        console.log(logMessages[this.language] + " " + this.fullName());
+      }
+      return this;
+    },
+    //change language on the fly
+    setLang: function (lang) {
+      this.validate();
+      this.language = lang;
+      return this;
+    },
+  };
 
   //'this' points to new empty object created using function constructor
   Greetr.init = function (firstname, lastname, language) {
